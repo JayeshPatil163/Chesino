@@ -1,0 +1,61 @@
+{
+  "name": "chesino",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-three/drei": "^10.0.0",
+    "@react-three/fiber": "^9.0.4",
+    "@react-three/postprocessing": "^3.0.4",
+    "chess.js": "^1.0.0",
+    "cra-template": "1.2.0",
+    "css-select": "^5.1.0",
+    "nth-check": "^2.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5",
+    "react-scripts": "^5.0.1",
+    "react-toastify": "^11.0.3",
+    "resolve-url-loader": "^5.0.0",
+    "serialize-javascript": "6.0.2",
+    "svgo": "^3.3.2",
+    "three": "^0.173.0",
+    "workbox-build": "6.5.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.3"
+  },
+  "overrides": {
+    "svgo": {
+      "nth-check": "2.1.1"
+    },
+    "resolve-url-loader": {
+      "postcss": "8.4.45"
+    }
+  }
+}

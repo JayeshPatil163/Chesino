@@ -1,0 +1,27 @@
+.ChessPlayground{
+    background-color: #111111;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    color: rgb(26, 26, 26);
+}
+
+.chessboardsurface{
+    margin: 3%;
+    background-color: #2222226d;
+    padding: 2%;
+    align-items: center;
+    box-shadow: 0px 15px 15px rgb(0, 0, 0);
+    color: rgb(10, 10, 10);
+    border-radius: 20px;
+    opacity: 0.2;
+    display: inline-block;
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+    flex-direction: column;
+}
