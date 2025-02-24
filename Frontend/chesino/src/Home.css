@@ -1,29 +1,50 @@
-.home{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.home {
+    position: relative;
+    width: 100%;
     height: 100vh;
-    background-color: #0e0e0e;
+    overflow: auto;
+    background-color: rgb(255, 255, 255);
 }
 
-.ditem{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2%;
-    padding: 2%;
-    background-color: #222222;
-    border-radius: 20px;
-    box-shadow: 0px 15px 15px rgb(0, 0, 0);
-    color: rgb(10, 10, 10);
-    opacity: 0.2;
-    display: inline-block;
+/*.filter{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(116, 116, 116, 0.06); /* Semi-transparent white 
+    backdrop-filter: blur(5px); /* Applies the frosted effect 
+    -webkit-backdrop-filter: blur(10px); 
+}*/
+
+.home > :first-child {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.content {
+    position: absolute;
+    top: 5%;
+    left: 7%;
+    z-index: 1;
+    padding: 1px;
+    color: rgb(0, 0, 0);
 }
 
-.content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    flex-direction: column;
+.content h1 {
+    font-size: 10em;
+    font-family:fantasy;
+    opacity: 0.8;
+    padding: 0px;
+}
+
+.content button {
+    padding: 10px 20px;
+    font-size: 1.5em;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    opacity: 0.8;
 }

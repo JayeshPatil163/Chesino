@@ -5,11 +5,12 @@ import { EffectComposer, DepthOfField } from '@react-three/postprocessing';
 
 
 function ChessboardModel() {
-  const { scene } = useGLTF('/chess_board.glb');
+  const { scene } = useGLTF('/chinese_chess.glb');
   const ref = useRef();
 
   useFrame(() => {
     // Optional: Add any animations or interactions here
+    ref.current.rotation.y -= 0.001;
   });
 
   return <primitive object={scene} ref={ref} scale={3} />;
@@ -19,9 +20,10 @@ const Chessboard3D = () => {
   return (
     <Canvas
       camera={{
-        position: [0, 10, 10], // Adjust this to position the camera appropriately
-        rotation: [-Math.PI / 2, 0, 0], // Adjust this to set the camera angle
-        fov: 75, // Adjust this to control the field of view
+        position: [-50, 7, 0], // Adjust this to position the camera appropriately
+        rotation: [-Math.PI / 0, 40, 0], // Adjust this to set the camera angle
+        fov: 90,
+        aspect: 1.77// Adjust this to control the field of view
       }}
     >
       {/* Lights */}
@@ -42,7 +44,7 @@ const Chessboard3D = () => {
       </EffectComposer>
 
       {/* OrbitControls for interactive camera */}
-      <OrbitControls />
+      <OrbitControls enableZoom={false}/>
     </Canvas>
   );
 };
