@@ -5,6 +5,7 @@ import { MOVE } from '../ChessGame';
 
 export const ChessBoard = ({ chess, setBoard, socket, board }) => {
     const [from, setFrom] = useState(null);
+    //We create a map to store the pieces
     const pieces = new Map();
     pieces.set("p", "bp.png");
     pieces.set("r", "br.png");
@@ -18,49 +19,65 @@ export const ChessBoard = ({ chess, setBoard, socket, board }) => {
     pieces.set('B', 'wb.png');
     pieces.set("Q", "wq.png");
     pieces.set("K", "wk.png");
-    //const [to, setTo] = use State(null);
+    const [isSelected, setIsSelected] = useState(null);
     return (
         <div className="chessboard">
             {board.map((row, i) => (
-                    row.map((square, j) => (
+                    row.map((square, j) => {
+                        const pos = String.fromCharCode(97 + (j % 8)) + "" + (8 - i);
+                        return (
                         <div onClick={() => {
-                                const pos = String.fromCharCode(97 + (j % 8)) + "" + (8 - i);
+                            if(chess.get(pos) !== undefined)
+                            {
                                 if(from === null)
                                 {
+                                    setIsSelected(pos);
                                     setFrom(pos);
+                                    /*let avail = chess.moves({square: pos});
+                                    for(let i of avail)
+                                    {
+                                        let squarea = document.getElementById(i);
+                                        squarea.style.backgroundColor = "red";
+                                    }*/
                                 }
-                                else
+                            }
+                                if(from !== null)
                                 {
-                                    //const temp = String.fromCharCode(97 + j) + "" + i;
+                                    setIsSelected(false);
                                     try{
-                                    socket.send(JSON.stringify({
-                                        type: MOVE,
-                                        move: {
-                                            from: from,
-                                            to: pos,
-                                        }
-                                    }));
+                                        //We send the move to the server
+                                        socket.send(JSON.stringify({
+                                            type: MOVE,
+                                            move: {
+                                                from: from,
+                                                to: pos,
+                                            }
+                                        }));
 
-                                    /*chess.move({
-                                        from: from,
-                                        to: pos,
-                                    });
-                                
-                                    setBoard(chess.board());*/
-                                    console.log("Sent move", from, pos);
-                                    setFrom(null);
+                                        /*let avail = chess.moves({square: from});
+                                        for(let i of avail)
+                                        {
+                                            let squarea = document.getElementById(i);
+                                            squarea.style.backgroundColor = null;
+                                        }*/
+
+                                        setFrom(null);
                                     }
                                     catch(e)
                                     {
                                         setFrom(null);
                                     }
                                 }
-                            }
-                        } key={`${i}-${j}`} className={`${(i + j) % 2 === 0 ? "lgreen" : "dgreen"}`} >
-                            {square ? <img src={square.color === 'w' ? pieces.get(square.type) : pieces.get(square.type.toUpperCase())} alt={square.type} /> : ""}
+                        }} 
+                        //We set the color of the square based on the sum of the row and column
+                        id = {pos} key={`${i}-${j}`} className={`${(i + j) % 2 === 0 ? "lgreen" : "dgreen"} ${pos === isSelected ? 'parent' : ''}`} >
+
+                            {/*If the square is not empty, we display the piece*/}
+                            {square ? <img className={pos === isSelected ? '' : 'dropShadow'} src={pieces.get(square.color === 'b' ? square.type : square.type.toUpperCase())} alt={square.type} /> : ""}
                         </div>
-                    ))
-            ))}
+                        )
+                    })
+                ))}
         </div>
     )
 }

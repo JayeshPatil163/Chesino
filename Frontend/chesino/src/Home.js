@@ -14,13 +14,11 @@ function Home() {
   return (
     <div className="home">
       <Chessboard3D/>
-      {/*<div className="filter">*/}
         <div className="content">
           <h1>WELCOME TO</h1>
           <h1>CHESINO</h1>
           <button onClick={goToNextPage}>Play Chess</button>
         </div>
-        {/*</div>*/}
     </div>
   );
 }

@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef,Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls} from '@react-three/drei';
 import { EffectComposer, DepthOfField } from '@react-three/postprocessing';
 
 
+
 function ChessboardModel() {
-  const { scene } = useGLTF('/chinese_chess.glb');
+  const { scene } = useGLTF('/chess_set.glb');
   const ref = useRef();
 
   useFrame(() => {
@@ -13,14 +14,15 @@ function ChessboardModel() {
     ref.current.rotation.y -= 0.001;
   });
 
-  return <primitive object={scene} ref={ref} scale={3} />;
+  return <primitive object={scene} ref={ref} scale={[1,1,1]} />;
 }
 
 const Chessboard3D = () => {
   return (
     <Canvas
       camera={{
-        position: [-50, 7, 0], // Adjust this to position the camera appropriately
+        //position: [-50, 7, 0], Adjust this to position the camera appropriately
+        position: [0, 5, 10],
         rotation: [-Math.PI / 0, 40, 0], // Adjust this to set the camera angle
         fov: 90,
         aspect: 1.77// Adjust this to control the field of view
@@ -30,8 +32,9 @@ const Chessboard3D = () => {
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
 
-      {/* Chessboard Model */}
-      <ChessboardModel />
+      <Suspense fallback={null}>
+        <ChessboardModel />
+      </Suspense>
 
       {/* Depth of Field Effect */}
       <EffectComposer>

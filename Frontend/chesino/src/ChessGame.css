@@ -19,9 +19,19 @@
 }
 
 .controls{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 2%;
     flex-direction: column;
+}
+
+.controls button {
+    padding: 5px 5px;
+    width: 200px;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    opacity: 0.8;
+    margin: 1%;
 }
