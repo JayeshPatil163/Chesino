@@ -6,6 +6,7 @@
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.0.4",
     "@react-three/postprocessing": "^3.0.4",
+    "ably": "^2.6.3",
     "chess.js": "^1.0.0",
     "cra-template": "1.2.0",
     "css-select": "^5.1.0",

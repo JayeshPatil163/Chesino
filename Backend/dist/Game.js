@@ -11,14 +11,12 @@ class Game {
         this.board = new chess_js_1.Chess();
         this.moves = [];
         this.startTime = new Date();
-        this.player1.send(JSON.stringify({
-            type: messages_1.INIT_GAME,
+        this.player1.publish(messages_1.INIT_GAME, JSON.stringify({
             payload: {
                 colour: "white"
             }
         }));
-        this.player2.send(JSON.stringify({
-            type: messages_1.INIT_GAME,
+        this.player2.publish(messages_1.INIT_GAME, JSON.stringify({
             payload: {
                 colour: "black"
             }
@@ -33,12 +31,10 @@ class Game {
         }
         try {
             this.board.move(move);
-            this.player2.send(JSON.stringify({
-                type: messages_1.MOVE,
+            this.player2.publish(messages_1.MOVE, JSON.stringify({
                 payload: move
             }));
-            this.player1.send(JSON.stringify({
-                type: messages_1.MOVE,
+            this.player1.publish(messages_1.MOVE, JSON.stringify({
                 payload: move
             }));
         }
@@ -46,14 +42,12 @@ class Game {
             return;
         }
         if (this.board.isGameOver()) {
-            this.player1.send(JSON.stringify({
-                type: messages_1.GAME_OVER,
+            this.player1.publish(messages_1.GAME_OVER, JSON.stringify({
                 payload: {
                     winner: this.board.turn() === "w" ? "black" : "white"
                 }
             }));
-            this.player2.send(JSON.stringify({
-                type: messages_1.GAME_OVER,
+            this.player2.publish(messages_1.GAME_OVER, JSON.stringify({
                 payload: {
                     winner: this.board.turn() === "w" ? "black" : "white"
                 }

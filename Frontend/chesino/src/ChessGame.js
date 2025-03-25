@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Chess } from "chess.js";
 import { alert, toast } from "react-toastify";
 
-//Thre's code repetetion here.
+//There's code repetetion here.
 export const INIT_GAME = "init_game";
 export const MOVE = "move";
 export const GAME_OVER = "game_over";
@@ -14,6 +14,7 @@ export const GAME_OVER = "game_over";
 function ChessGame()
 {
     const socket = useSocket();
+    const message = [INIT_GAME, MOVE, GAME_OVER];
     const [game, setGame] = useState(new Chess());
     const [board, setBoard] = useState(game.board());
 
@@ -23,11 +24,10 @@ function ChessGame()
             return;
         }
 
-        socket.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            console.log("Received message", message);
+        socket.subscribe(message, (data) => {
+            console.log("Received message", data);
 
-            switch(message.type)
+            switch(data.name)
             {
                 case INIT_GAME:
                     //setGame(new Chess());
@@ -36,23 +36,23 @@ function ChessGame()
                     break;
                 case MOVE:
                     try{
-                        game.move(message.payload);
+                        game.move(data.data);
                     }
                     catch(e)
                     {
-                        console.log("Invalid move ", e);
+                        console.log("Invalid move ", data);
                     }
                     setBoard(game.board());
                     console.log("Move made");
                     break;
                 case GAME_OVER:
-                    toast("Game over and " + message.payload.winner + " wins");
+                    toast("Game over and " + data.data + " wins");
                     console.log("Game over");
                     break;
                 default:
-                    console.log("Unknown message type", message.type);
+                    console.log("Unknown message type", data.type);
             }
-        }
+        })
     }, [socket]);
 
     if(!socket)
@@ -67,9 +67,7 @@ function ChessGame()
                 </div>
                 <div className="controls">
                     <button onClick={() => {
-                        socket.send(JSON.stringify({
-                            type: INIT_GAME,
-                        }));
+                        socket.publish(INIT_GAME, {});
                     }}>Start Game</button>
                 </div>
         </div>

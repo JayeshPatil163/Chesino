@@ -1,36 +1,35 @@
 import { WebSocket } from "ws";
 import { Chess } from "chess.js";
 import { GAME_OVER, INIT_GAME, MOVE } from "./messages";
+import Ably from 'ably';
 
 export class Game{
-    public player1: WebSocket;
-    public player2: WebSocket;
+    public player1: Ably.RealtimeChannel;
+    public player2: Ably.RealtimeChannel;
     private board: Chess;
     private moves: string[];
     private startTime: Date;
     private moveCount = 0;
 
-    constructor(player1: WebSocket, player2: WebSocket) {
+    constructor(player1: Ably.RealtimeChannel, player2: Ably.RealtimeChannel) {
         this.player1 = player1;
         this.player2 = player2;
         this.board = new Chess();
         this.moves = [];
         this.startTime = new Date();
-        this.player1.send(JSON.stringify({
-            type : INIT_GAME,
+        this.player1.publish(INIT_GAME , JSON.stringify({
             payload : {
                 colour : "white"
             }
         }))
-        this.player2.send(JSON.stringify({
-            type : INIT_GAME,
+        this.player2.publish(INIT_GAME , JSON.stringify({
             payload : {
                 colour : "black"
             }
         }))
     }
 
-    public makeMove(socket: WebSocket, move: {
+    public makeMove(socket: Ably.RealtimeChannel, move: {
         from: string;
         to: string;
     })
@@ -45,12 +44,10 @@ export class Game{
         }
         try{
             this.board.move(move)
-            this.player2.send(JSON.stringify({
-                type: MOVE,
+            this.player2.publish(MOVE, JSON.stringify({
                 payload: move
             }))
-            this.player1.send(JSON.stringify({
-                type: MOVE,
+            this.player1.publish(MOVE, JSON.stringify({
                 payload: move
             }))
         }
@@ -62,14 +59,9 @@ export class Game{
 
         if(this.board.isGameOver())
         {
-            this.player1.send(JSON.stringify({
-                type : GAME_OVER,
-                payload: {
-                    winner : this.board.turn() === "w" ? "black" : "white"
-                }
+            this.player1.publish(GAME_OVER, JSON.stringify({ payload: this.board.turn() === "w" ? "black" : "white"
             }))
-            this.player2.send(JSON.stringify({
-                type : GAME_OVER,
+            this.player2.publish(GAME_OVER, JSON.stringify({
                 payload: {
                     winner : this.board.turn() === "w" ? "black" : "white"
                 }

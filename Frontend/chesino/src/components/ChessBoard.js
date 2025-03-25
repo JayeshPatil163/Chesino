@@ -46,13 +46,10 @@ export const ChessBoard = ({ chess, setBoard, socket, board }) => {
                                     setIsSelected(false);
                                     try{
                                         //We send the move to the server
-                                        socket.send(JSON.stringify({
-                                            type: MOVE,
-                                            move: {
+                                        socket.publish(MOVE, {
                                                 from: from,
                                                 to: pos,
-                                            }
-                                        }));
+                                            });
 
                                         /*let avail = chess.moves({square: from});
                                         for(let i of avail)

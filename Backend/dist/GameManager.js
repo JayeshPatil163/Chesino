@@ -18,26 +18,48 @@ class GameManager {
         //we'll stop the game here
     }
     addHandler(socket) {
-        socket.on('message', (data) => {
+        socket.subscribe(messages_1.INIT_GAME, (data) => {
+            if (this.pendingUser) {
+                const game = new Game_1.Game(this.pendingUser, socket);
+                this.games.push(game);
+                this.pendingUser = null;
+            }
+            else {
+                this.pendingUser = socket;
+            }
+        });
+        socket.subscribe(messages_1.MOVE, (data) => {
+            const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
+            if (game) {
+                const move = JSON.parse(data.toString());
+                game.makeMove(socket, move.data);
+            }
+        });
+        /*socket.subscribe('message', (data) => {
             const message = JSON.parse(data.toString());
             console.log("It comes here under GameManager class... " + message);
-            if (message.type === messages_1.INIT_GAME) {
-                if (this.pendingUser) {
-                    const game = new Game_1.Game(this.pendingUser, socket);
+            if(message.type === INIT_GAME) {
+                if(this.pendingUser)
+                {
+                    const game = new Game(this.pendingUser, socket);
                     this.games.push(game);
                     this.pendingUser = null;
                 }
-                else {
+                else
+                {
                     this.pendingUser = socket;
                 }
             }
-            if (message.type === messages_1.MOVE) {
+
+            if(message.type === MOVE)
+            {
                 const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
-                if (game) {
+                if(game)
+                {
                     game.makeMove(socket, message.move);
                 }
             }
-        });
+        })*/
     }
 }
 exports.GameManager = GameManager;
