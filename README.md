@@ -40,7 +40,7 @@ cd chesino
 # In a new terminal, install backend
 cd backend
 npm install
-npm run dev
+node dist/index.js
 
 # Install frontend
 cd frontend
