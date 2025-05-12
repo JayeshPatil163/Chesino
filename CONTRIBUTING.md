@@ -27,22 +27,21 @@ cd chesino
 # Create a new branch
 git checkout -b your-feature-name
 🧪 Setting Up the Project
+
+
 Follow the steps below to set up the project locally:
 
-bash
-Copy
-Edit
-# Install frontend dependencies
+# In a new terminal, install backend
+cd backend
+npm install
+node dist/index.js
+
+# Install frontend
 cd frontend
 npm install
 npm start
-bash
-Copy
-Edit
-# In a new terminal, install backend dependencies
-cd backend
-npm install
-npm run dev
+
+
 ⚠️ Make sure to set up .env files as described in README.md.
 
 🧹 Code Style & Best Practices
