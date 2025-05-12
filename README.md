@@ -37,7 +37,21 @@ Chesino is a real-time multiplayer chess platform built using React and Node.js.
 git clone https://github.com/your-username/chesino.git
 cd chesino
 
+# In a new terminal, install backend
+cd backend
+npm install
+npm run dev
+
 # Install frontend
 cd frontend
 npm install
 npm start
+
+🤝 Contributing
+We love contributions! If you're interested in contributing to Chesino, please check out the CONTRIBUTING.md for setup and guidelines.
+
+📄 License
+MIT License
+
+⭐ Show Your Support
+If you like this project, please ⭐️ the repo and consider contributing!
